@@ -15,7 +15,7 @@ void read_wisdom(void)
     static char wisdomfilenm[120];
 
     /* First try to import the system wisdom if available */
-    fftwf_import_system_wisdom();
+    //fftwf_import_system_wisdom();
     sprintf(wisdomfilenm, "%s/lib/fftw_wisdom.txt", getenv("PRESTO"));
     wisdomfile = fopen(wisdomfilenm, "r");
     if (wisdomfile == NULL) {

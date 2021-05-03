@@ -381,11 +381,6 @@ void get_WAPP_file_info(FILE * files[], int numwapps, int numfiles, int usewindo
         clip_sigma_st = clipsig;
     numwappchan_st = idata_st[0].num_chan;
     *numchan = numchan_st = numwapps_st * numwappchan_st;
-    /* The following should be freed sometime... */
-    lags = (float *) fftwf_malloc((numwappchan_st + 1) * sizeof(float));
-    fftplan =
-        fftwf_plan_r2r_1d(numwappchan_st + 1, lags, lags, FFTW_REDFT00,
-                          FFTW_PATIENT);
     if (usewindow) {
         usewindow_st = 1;
         printf("Calculated Hanning window for use.\n");

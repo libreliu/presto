@@ -23,7 +23,6 @@ extern short transpose_float(float *a, int nx, int ny, unsigned char *move,
 extern double DATEOBS_to_MJD(char *dateobs, int *mjd_day, double *mjd_fracday);
 extern void read_filterbank_files(struct spectra_info *s);
 extern void read_PSRFITS_files(struct spectra_info *s);
-extern fftwf_plan plan_transpose(int rows, int cols, float *in, float *out);
 extern int *ranges_to_ivect(char *str, int minval, int maxval, int *numvals);
 
 void psrdatatype_description(char *outstr, psrdatatype ptype)
@@ -686,9 +685,11 @@ int prep_subbands(float *fdata, float *rawdata, int *delays, int numsubbands,
         currentdata = rawdata1;
         lastdata = rawdata2;
         // Make plans to do fast transposes using FFTW
+	/*
         tplan1 = plan_transpose(s->spectra_per_subint, s->num_channels,
                                 currentdata, currentdata);
         tplan2 = plan_transpose(numsubbands, s->spectra_per_subint, fdata, fdata);
+	*/
     }
 
     /* Read and de-disperse */
@@ -738,7 +739,8 @@ int prep_subbands(float *fdata, float *rawdata, int *delays, int numsubbands,
 
     // Now transpose the raw block of data so that the times in each
     // channel are the most rapidly varying index
-    fftwf_execute_r2r(tplan1, currentdata, currentdata);
+    // fftwf_execute_r2r(tplan1, currentdata, currentdata);
+    mkl_simatcopy('R', 'T', s->spectra_per_subint, s->num_channels, 1, currentdata, s->num_channels, s->spectra_per_subint);
 
     if (firsttime) {
         SWAP(currentdata, lastdata);
@@ -750,7 +752,8 @@ int prep_subbands(float *fdata, float *rawdata, int *delays, int numsubbands,
         SWAP(currentdata, lastdata);
         // Transpose the resulting data into spectra as a function of time
         if (transpose == 0)
-            fftwf_execute_r2r(tplan2, fdata, fdata);
+	    mkl_simatcopy('R', 'T', numsubbands, s->spectra_per_subint, 1, fdata, s->spectra_per_subint, numsubbands);
+            //fftwf_execute_r2r(tplan2, fdata, fdata);
         return s->spectra_per_subint;
     }
 }

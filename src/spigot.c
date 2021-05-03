@@ -277,12 +277,6 @@ int read_SPIGOT_header(char *filename, SPIGOT_INFO * spigot)
     }
     free(hdr);
     if (lags == NULL) {
-        /* The following should be freed sometime... */
-        lags = (float *) fftwf_malloc((numchan_st + 1) * sizeof(float));
-        /* Generate the FFTW plan */
-        fftplan =
-            fftwf_plan_r2r_1d(numchan_st + 1, lags, lags, FFTW_REDFT00,
-                              FFTW_PATIENT);
     }
     return (1);
 }
