@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <ctype.h>
+#include <mkl/mkl_trans.h>
 #include "backend_common.h"
 #include "misc_utils.h"
 #include "fftw3.h"
