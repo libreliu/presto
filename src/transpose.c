@@ -1,5 +1,5 @@
 #include "presto.h"
-#include "fftw3.h"
+#include "fftw3_mkl.h"
 
 fftwf_plan plan_transpose(int rows, int cols, float *in, float *out)
 {

@@ -5,7 +5,7 @@
 #include <math.h>
 #include "clk_tck.h"
 #include "vectors.h"
-#include "fftw3.h"
+#include "fftw3_mkl.h"
 #include "assert.h"
 
 extern short transpose_float(float *a, int nx, int ny, unsigned char *move, 

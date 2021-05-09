@@ -29,8 +29,8 @@ PGPLOTINC = -I$(PGPLOT_DIR)
 PGPLOTLINK = -L$(PGPLOT_DIR) -lcpgplot -lpgplot $(X11LINK) $(PNGLINK)
 
 # Include and link information for the FFTW 3.X single-precision library
-FFTINC := $(shell pkg-config --cflags fftw3f)
-FFTLINK := $(shell pkg-config --libs fftw3f)
+FFTINC := -I/usr/include/mkl/fftw -I/usr/include/mkl/
+FFTLINK := -L/usr/lib/x86_64-linux-gnu/ -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lgomp -lmkl_avx2 -lmkl_def -lpthread -lm -ldl
 
 # Include and link information for the GLIB 2.0 library
 GLIBINC := $(shell pkg-config --cflags glib-2.0)

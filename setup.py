@@ -12,7 +12,7 @@ version = "3.0.1"
 define_macros = []
 undef_macros = []
 extra_compile_args = ["-DUSEFFTW"]
-include_dirs = [numpy.get_include()]
+include_dirs = [numpy.get_include(), '/usr/include/mkl/fftw', '/usr/include/mkl/']
 # For MacOS with MacPorts use the following
 # include_dirs.append("/opt/local/include")
 
@@ -21,7 +21,8 @@ include_dirs = [numpy.get_include()]
 ppgplot_libraries = ["cpgplot", "pgplot", "X11", "png", "m"]
 ppgplot_library_dirs = ["/usr/X11R6/lib"]
 
-presto_libraries = ["presto", "fftw3f", "m"]
+presto_libraries = ["presto", "m"]
+presto_extra_args = "-L/usr/lib/x86_64-linux-gnu/ -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl".split()
 presto_library_dirs = []
 
 ppgplot_include_dirs = include_dirs
@@ -63,7 +64,7 @@ ext_presto = Extension('_presto',
                        library_dirs=presto_library_dirs,
                        define_macros=define_macros,
                        extra_compile_args=extra_compile_args,
-                       extra_link_args=extra_link_args)
+                       extra_link_args=(extra_link_args + presto_extra_args))
 
 ext_fftfit = Extension('_fftfit', sources=['python/fftfit_src/brent.f',
                                           'python/fftfit_src/cprof.f',

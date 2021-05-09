@@ -31,7 +31,7 @@ typedef fcomplex rawtype;
 
 /* Figure out which FFTs we are using */
 
-#include "fftw3.h"
+#include "fftw3_mkl.h"
 void fftwcall(fcomplex *indata, long nn, int isign);
 void read_wisdom(void);
 #ifndef COMPLEXFFT

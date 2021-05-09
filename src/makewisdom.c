@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "meminfo.h"
-#include "fftw3.h"
+#include "fftw3_mkl.h"
 
 #ifdef USEDMALLOC
 #include "dmalloc.h"
